@@ -1,7 +1,18 @@
 import createHttpError from "http-errors";
-import { verifyAccessToken } from "./tools.js";
+import { verifyAccessToken } from "./tools";
+import { RequestHandler, Request } from "express";
+import { ObjectId } from "mongoose";
+import { TokenPayload } from "./tools";
 
-export const JWTAuthMiddleware = async (req, res, next) => {
+export interface UserRequest extends Request {
+  user?: TokenPayload;
+}
+
+export const JWTAuthMiddleware: RequestHandler = async (
+  req: UserRequest,
+  res,
+  next
+) => {
   if (!req.headers.authorization) {
     next(createHttpError(401, "Please provide Bearer Token"));
   } else {

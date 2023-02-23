@@ -10,11 +10,11 @@ import {
   notFoundHandler,
   notYourZoneHandler,
   unAuthorizedHandler,
-} from "./errorHandlers.js";
-import usersRouter from "./api/users/index.js";
-import accomodationsRouter from "./api/accomodations/index.js";
+} from "./errorHandlers";
+import usersRouter from "./api/users/index";
+import accomodationsRouter from "./api/accomodations/index";
 
-const server = express();
+export const server = express();
 const port = process.env.port;
 
 server.use(cors());
@@ -28,15 +28,3 @@ server.use(notFoundHandler);
 server.use(notYourZoneHandler);
 server.use(genericErrorHandler);
 server.use(unAuthorizedHandler);
-
-mongoose.connect(process.env.MONGO_URL);
-
-mongoose.connection.on("connected", () => {
-  console.log("Connected to Mongo!");
-  server.listen(port, () => {
-    console.table(
-      listEndpoints(server),
-      console.log(`Server's port is ${port}`)
-    );
-  });
-});

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
-
+import { AccommodationDocument } from "./types";
 const accomodationsSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -12,4 +12,6 @@ const accomodationsSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("Accomodations", accomodationsSchema);
+export default model <
+  AccommodationDocument >
+  ("Accomodations", accomodationsSchema);
